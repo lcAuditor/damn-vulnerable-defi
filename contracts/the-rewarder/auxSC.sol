@@ -13,29 +13,45 @@ interface IFLP {
     function flashLoan(uint256 amount) external;
 }
 
+interface ITRP {
+    function deposit(uint256 amount) external;
+}
+
 contract auxSC{
 
     address liquidityToken;
     address flashLoanerPool;
+    address theRewarderPool;
     
     address deployer;
 
 
-    constructor (address liquidityToken_, address flashLoanerPool_){
+    constructor (address liquidityToken_, address flashLoanerPool_,address theRewarderPool_){
         deployer = msg.sender;
         liquidityToken = liquidityToken_;
         flashLoanerPool = flashLoanerPool_;
+        theRewarderPool = theRewarderPool_;
     }
 
 
     function exploitFlashLoan(uint amount_) public {
 
+        // Hago el llamado al metodo flashLoan del pool 
         IFLP(flashLoanerPool).flashLoan(amount_);
 
     }
 
-    function receiveFlashLoan(uint256 amount_) public {
+    //! Metedo llamado desde el pool al llamar a flashLoan
+    function receiveFlashLoan(uint256 amount_) public{
 
+        //! obtengo el dinero solicitado
+        //! tengo que hacer algo con el prestamo
+
+        //uint256 aux = amount_/2;
+        //ITRP(theRewarderPool).deposit(aux);
+        //ITRP(theRewarderPool).deposit(aux);
+
+        // retorno el dinero del prestamo 
         IERC20(liquidityToken).transferFrom(address(this),flashLoanerPool,amount_);
 
     }
